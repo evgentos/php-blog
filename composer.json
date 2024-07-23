@@ -1,0 +1,16 @@
+{
+    "name": "evgeniy/blog",
+    "description": "Blog on PHP and MySQL",
+    "type": "project",
+    "authors": [
+        {
+            "name": "evgentos",
+            "email": "evgentos2009@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "slim/slim": "4.*",
+        "slim/psr7": "^1.7"
+    }
+}
