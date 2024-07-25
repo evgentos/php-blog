@@ -2,3 +2,5 @@ composer.phar
 .idea/
 .vscode/
 /vendor/
+*.csprj
+
