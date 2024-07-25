@@ -22,7 +22,15 @@ $app->get('/', function (Request $request, Response $response, $args) use ($view
 
 $app->get('/about', function (Request $request, Response $response, $args) use ($view) {
     $body = $view->render('about.twig', [
-        'name'=> 'Vasiliy',
+        'name' => 'Vasiliy',
+    ]);
+    $response->getBody()->write($body);
+    return $response;
+});
+
+$app->get('/{url_key}', function (Request $request, Response $response, $args) use ($view) {
+    $body = $view->render('post.twig', [
+        'url_key' => $args['url_key'],
     ]);
     $response->getBody()->write($body);
     return $response;
