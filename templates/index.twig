@@ -3,79 +3,33 @@
 {% block body %}
 <div class="container">
   <h1 class="mt-3 mb-3">Welcome to my Blog!</h1>
-  <div class="row mb-1">
-    <div class="card-group">
-      <div class="card">
-        <img src="https://dummyimage.com/300x200/555/fff" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
-            content. This content is a little bit longer.</p>
+  {% set rowCount = 1 %}
+  {% for post in posts %}
+    {% if rowCount == 1 %}
+    <div class="row mb-1">
+      <div class="card-group">
+    {% endif %}
+
+        <div class="card">
+          <img src="https://dummyimage.com/300x200/555/fff" class="card-img-top" alt="{{ post.title|escape }}">
+          <div class="card-body">
+            <h5 class="card-title"><a href="/{{ post.url_key }}">{{ post.title|escape }}</a></h5>
+            <p class="card-text">{{ post.description|escape }}</p>
+            <a href="/{{ post.url_key }}">Read more</a>
+          </div>
+          <div class="card-footer">
+            <small class="text-muted">Last updated 3 mins ago</small>
+          </div>
         </div>
-        <div class="card-footer">
-          <small class="text-muted">Last updated 3 mins ago</small>
-        </div>
-      </div>
-      <div class="card">
-        <img src="https://dummyimage.com/300x200/555/fff" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
-            content. This content is a little bit longer.</p>
-        </div>
-        <div class="card-footer">
-          <small class="text-muted">Last updated 3 mins ago</small>
-        </div>
-      </div>
-      <div class="card">
-        <img src="https://dummyimage.com/300x200/555/fff" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
-            content. This content is a little bit longer.</p>
-        </div>
-        <div class="card-footer">
-          <small class="text-muted">Last updated 3 mins ago</small>
-        </div>
+
+    {% if rowCount == 3 %}
       </div>
     </div>
-  </div>
-  <div class="row mb-2">
-    <div class="card-group">
-      <div class="card">
-        <img src="https://dummyimage.com/300x200/555/fff" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
-            content. This content is a little bit longer.</p>
-        </div>
-        <div class="card-footer">
-          <small class="text-muted">Last updated 3 mins ago</small>
-        </div>
-      </div>
-      <div class="card">
-        <img src="https://dummyimage.com/300x200/555/fff" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
-            content. This content is a little bit longer.</p>
-        </div>
-        <div class="card-footer">
-          <small class="text-muted">Last updated 3 mins ago</small>
-        </div>
-      </div>
-      <div class="card">
-        <img src="https://dummyimage.com/300x200/555/fff" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional
-            content. This content is a little bit longer.</p>
-        </div>
-        <div class="card-footer">
-          <small class="text-muted">Last updated 3 mins ago</small>
-        </div>
-      </div>
-    </div>
-  </div>
+    {% endif %}
+    {% set rowCount = rowCount + 1 %}
+    {% if rowCount > 3 %}
+      {% set rowCount = 1 %}
+    {% endif %}
+  {% endfor %}
 </div>
 {% endblock %}
