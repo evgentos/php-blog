@@ -5,6 +5,7 @@ use Slim\Factory\AppFactory;
 use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
 use Blog\PostMapper;
+use Blog\LatestPosts;
 
 require __DIR__ . '/vendor/autoload.php';
 
@@ -26,12 +27,11 @@ try {
     die();
 }
 
-$postMapper = new PostMapper($connection);
-
 $app = AppFactory::create();
 
-$app->get('/', function (Request $request, Response $response, $args) use ($view, $postMapper) {
-    $posts = $postMapper->getList('DESC');
+$app->get('/', function (Request $request, Response $response) use ($view, $connection) {
+    $latestPosts = new LatestPosts($connection);
+    $posts = $latestPosts->get(2);
     $body = $view->render('index.twig', [
         'posts' => $posts,
     ]);
@@ -39,7 +39,7 @@ $app->get('/', function (Request $request, Response $response, $args) use ($view
     return $response;
 });
 
-$app->get('/about', function (Request $request, Response $response, $args) use ($view) {
+$app->get('/about', function (Request $request, Response $response) use ($view) {
     $body = $view->render('about.twig', [
         'name' => 'Vasiliy',
     ]);
@@ -47,7 +47,9 @@ $app->get('/about', function (Request $request, Response $response, $args) use (
     return $response;
 });
 
-$app->get('/{url_key}', function (Request $request, Response $response, $args) use ($view, $postMapper) {
+$app->get('/{url_key}', function (Request $request, Response $response, $args) use ($view, $connection) {
+    $postMapper = new PostMapper($connection);
+    
     $post = $postMapper->getByUrlKey((string) $args['url_key']);
 
     if (empty($post)) {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Blog;
 
+use Exception;
 use PDO;
 
 class PostMapper
